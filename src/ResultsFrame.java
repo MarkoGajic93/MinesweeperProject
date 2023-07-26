@@ -9,12 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ResultsFrame extends JFrame {
+    private static ResultsFrame instance;
     private JTable resultsTable;
     private JScrollPane tableScroll;
     private JButton myRes, allRes, removeRes;
     private String currUser;
 
-    public ResultsFrame (Connection conn, String username) {
+    // Private constructor because of singleton pattern being implemented
+    private ResultsFrame (Connection conn, String username) {
         // Setting basics of frame
         super("Results");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -79,6 +81,13 @@ public class ResultsFrame extends JFrame {
         int screanY = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getPreferredSize().height)/2;
         this.setLocation(screanX, screanY);
         pack();
+    }
+    // Method to get a new or an existing instance of ResultFrame class
+    // (called instead of ResultsFrame constructor, to prevent creating more than one objects/opening more than one ResultFrame window)
+    public static ResultsFrame getInstance(Connection conn, String username) {
+        if (instance == null)
+            instance = new ResultsFrame(conn, username);
+        return instance;
     }
 
     // Method to create table and add it to a frame (allResults value determines if all or only currUser results will be displayed)
