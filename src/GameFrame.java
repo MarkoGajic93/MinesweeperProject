@@ -49,7 +49,7 @@ public class GameFrame extends JFrame {
             }
         });
         JMenuItem viewRes = new JMenuItem("View results");
-        viewRes.addActionListener(e -> new ResultsFrame(conn, user.getText()).setVisible(true));
+        viewRes.addActionListener(e -> ResultsFrame.getInstance(conn, user.getText()).setVisible(true));
         JMenuItem logOut = new JMenuItem("Log out");
         logOut.addActionListener(e -> { logIn(); this.remove(gamePane); timer.stop(); startGame(difficulty); });
         JMenu optsMenu = new JMenu("Options");
